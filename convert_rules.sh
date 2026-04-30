@@ -86,7 +86,17 @@ for target in "${TARGETS[@]}"; do
     fi
 
     # Kopiowanie umiejętności (skills)
-    SKILLS_DEST="$target/.agents/skills"
+    if [ "$target" == "OpenCodeProject" ]; then
+        SKILLS_DEST="$target/.opencode/skills"
+        # Czyszczenie folderu skills przed kopiowaniem (bez usuwania całego .opencode)
+        if [ -d "$SKILLS_DEST" ]; then
+            echo "Czyszczenie $SKILLS_DEST..."
+            rm -rf "$SKILLS_DEST"
+        fi
+    else
+        SKILLS_DEST="$target/.agents/skills"
+    fi
+
     echo "Kopiowanie umiejętności do $SKILLS_DEST..."
     mkdir -p "$SKILLS_DEST"
     
