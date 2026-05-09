@@ -14,6 +14,7 @@ GEMINI_RULES_FILE="GEMINI.md"
 ORDER=(
     "project-info.md"
     "architecture.md"
+    "routing_and_reactivity.md"
     "screensAndComponents.md"
     "coding.md"
     "ui.md"
