@@ -1,27 +1,20 @@
 #!/bin/bash
 
-# The script iterates through each subdirectory in the current directory
-# and executes 'git pull' inside it.
+# The script iterates through the directory structure to find git repositories
+# and executes 'git pull' inside them.
 
-for dir in */; do
-    # Remove the trailing slash for cleaner display
-    dir_name="${dir%/}"
+find . -maxdepth 3 -name ".git" -type d | while read gitdir; do
+    repo_dir=$(dirname "$gitdir")
     
-    if [ -d "$dir" ]; then
-        echo ">>> Updating: $dir_name"
-        
-        # Enter the subdirectory
-        cd "$dir" || continue
-        
-        # Check if it is a git repository
-        if [ -d ".git" ]; then
-            git pull
-        else
-            echo "Skipped: $dir_name (no .git folder)"
-        fi
-        
-        # Return to the parent directory
-        cd ..
-        echo "----------------------------------------"
+    # Skip the current directory if it happens to be a git repository itself
+    if [ "$repo_dir" = "." ]; then
+        continue
     fi
+    
+    echo ">>> Updating: $repo_dir"
+    
+    # Enter the directory and pull
+    (cd "$repo_dir" && git pull)
+    
+    echo "----------------------------------------"
 done

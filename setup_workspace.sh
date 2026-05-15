@@ -24,11 +24,19 @@ echo "in folders of this project you can find rules and skills for AI coding age
 echo "=========================================="
 echo "Pobieranie projektów..."
 echo "=========================================="
+# Wyodrębnienie nazwy projektu z URL
+PROJECT_NAME=$(basename "$PROJECT_REPO_URL" | sed 's/\.git$//')
+
 # Sklonowanie repozytorium projektu i nadanie odpowiednich nazw folderom
 git clone "$PROJECT_REPO_URL" CleanProject
 git clone "$PROJECT_REPO_URL" antigravityProject
-git clone "$PROJECT_REPO_URL" OpenCodeProject
-git clone "$PROJECT_REPO_URL" geminiCLIProject
+
+# Dla OpenCode i Gemini CLI projekt jest w podfolderze, aby pliki agenta były w głównym folderze
+mkdir -p OpenCodeProject
+git clone "$PROJECT_REPO_URL" "OpenCodeProject/$PROJECT_NAME"
+
+mkdir -p geminiCLIProject
+git clone "$PROJECT_REPO_URL" "geminiCLIProject/$PROJECT_NAME"
 
 echo "=========================================="
 echo "Konfiguracja rules w projekcie antigravity..."
