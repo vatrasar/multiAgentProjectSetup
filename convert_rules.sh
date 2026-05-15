@@ -17,6 +17,7 @@ ORDER=(
     "routing_and_reactivity.md"
     "screensAndComponents.md"
     "coding.md"
+    "frameworks_specific_rules.md"
     "ui.md"
 )
 
